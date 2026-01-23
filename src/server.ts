@@ -17,6 +17,11 @@ const corsOptions = {
   credentials: true, // IMPORTANTE: Necessário se você enviar tokens ou cookies
 };
 
+app.use((req, res, next) => {
+  console.log(`[Request] ${req.method} ${req.path} - Origin: ${req.headers.origin}`);
+  next();
+});
+
 // 2. Aplique o middleware CORS
 app.use(cors(corsOptions));
 
