@@ -35,7 +35,7 @@ COPY --from=build /app/dist ./dist
 # COPY --from=build /app ./
 
 # Porta do backend
-EXPOSE 3000
+EXPOSE 3333
 
 # Ajuste conforme seu framework
 CMD ["node", "dist/main.js"]

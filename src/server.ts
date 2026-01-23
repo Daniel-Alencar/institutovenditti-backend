@@ -24,5 +24,4 @@ app.get('/health', (req, res) => {
 
 app.listen(env.port, () => {
   console.log(`🚀 Backend rodando em http://localhost:${env.port}`);
-  console.log(`✅ Integração Gemini ativada`);
 });
