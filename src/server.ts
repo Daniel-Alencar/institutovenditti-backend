@@ -8,13 +8,20 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({
-  origin: [
-    'https://seu-direito.institutovenditti.org'
-  ],
+// 1. Defina as opções do CORS separadamente para reutilização
+const corsOptions = {
+  origin: 'https://seu-direito.institutovenditti.org', // Se for único, string direta é mais seguro que array
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  optionsSuccessStatus: 200, // IMPORTANTE: Alguns navegadores/proxies (como Easypanel) falham com 204
+  credentials: true, // IMPORTANTE: Necessário se você enviar tokens ou cookies
+};
+
+// 2. Aplique o middleware CORS
+app.use(cors(corsOptions));
+
+// 3. Habilite explicitamente o Preflight (OPTIONS) para todas as rotas
+app.options('*', cors(corsOptions));
 
 app.use('/api', sendEmailRoute);
 app.use('/api', aiAnalyzeRoute);
