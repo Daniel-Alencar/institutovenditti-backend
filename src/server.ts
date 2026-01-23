@@ -10,11 +10,11 @@ app.use(express.json());
 
 // 1. Defina as opções do CORS separadamente para reutilização
 const corsOptions = {
-  origin: 'https://seu-direito.institutovenditti.org', // Se for único, string direta é mais seguro que array
+  origin: 'https://seu-direito.institutovenditti.org',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200, // IMPORTANTE: Alguns navegadores/proxies (como Easypanel) falham com 204
-  credentials: true, // IMPORTANTE: Necessário se você enviar tokens ou cookies
+  optionsSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use((req, res, next) => {
