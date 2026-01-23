@@ -41,6 +41,6 @@ app.get('/health', (req, res) => {
 });
 
 // ⚠️ Escutar em 0.0.0.0 (container)
-app.listen(env.port, () => {
+app.listen(env.port, '0.0.0.0', () => {
   console.log(`🚀 Backend rodando na porta ${env.port}`);
 });
