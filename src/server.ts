@@ -23,6 +23,6 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.listen(env.port, '0.0.0.0', () => {
-  console.log(`🚀 Backend rodando na porta ${env.port}`);
+app.listen(env.port, () => {
+  console.log(`Backend rodando na porta ${env.port}`);
 });
