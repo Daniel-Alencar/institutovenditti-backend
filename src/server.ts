@@ -8,20 +8,30 @@ const app = express();
 
 app.use(express.json());
 
-const corsOptions = {
-  origin: 'https://seu-direito.institutovenditti.org',
+// 1. Origens devem SEMPRE incluir o protocolo (https:// )
+const allowedOrigins = [
+  'https://seu-direito.institutovenditti.org',
+  'https://www.seu-direito.institutovenditti.org',
+  'https://encubadora-venditti-frontend.wievbf.easypanel.host',
+  'https://www.encubadora-venditti-frontend.wievbf.easypanel.host',
+];
+
+app.use(cors({
+  origin: (origin, callback ) => {
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log(`[CORS Bloqueado] Origem não permitida: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200,
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
-};
-
-// 1. Aplica o CORS globalmente
-app.use(cors(corsOptions));
-
-// 2. CORREÇÃO AQUI: Usar /.*/ (Regex) em vez de '*' (String)
-// Isso evita o erro "Missing parameter name" e força o preflight em tudo
-app.options(/.*/, cors(corsOptions));
+  optionsSuccessStatus: 200
+}));
 
 app.use('/api', sendEmailRoute);
 app.use('/api', aiAnalyzeRoute);
