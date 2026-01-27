@@ -6,32 +6,22 @@ import aiAnalyzeRoute from './routes/ai-analyze';
 
 const app = express();
 
-app.use(express.json());
-
-// 1. Origens devem SEMPRE incluir o protocolo (https:// )
-const allowedOrigins = [
-  'https://seu-direito.institutovenditti.org',
-  'https://www.seu-direito.institutovenditti.org',
-  'https://encubadora-venditti-frontend.wievbf.easypanel.host',
-  'https://www.encubadora-venditti-frontend.wievbf.easypanel.host',
-];
-
 app.use(cors({
-  origin: (origin, callback ) => {
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log(`[CORS Bloqueado] Origem não permitida: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'https://seu-direito.institutovenditti.org',
+    'https://www.seu-direito.institutovenditti.org',
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true,
-  optionsSuccessStatus: 200
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Internal-Token'
+  ],
+  credentials: true
 }));
+
+app.use(express.json());
 
 app.use('/api', sendEmailRoute);
 app.use('/api', aiAnalyzeRoute);
