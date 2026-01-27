@@ -23,6 +23,12 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log('[REQ]', req.method, req.url, 'Origin:', req.headers.origin);
+  next();
+});
+
+
 app.use('/api', sendEmailRoute);
 app.use('/api', aiAnalyzeRoute);
 
