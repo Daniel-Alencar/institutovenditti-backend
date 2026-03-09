@@ -26,7 +26,7 @@ router.post(
       if (token !== env.internalToken) {
         return res.status(401).json({ error: 'Unauthorized' });
       }
-
+      
       const {
         to,
         subject,

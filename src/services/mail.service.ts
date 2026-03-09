@@ -20,6 +20,9 @@ export async function sendMail(options: {
     buffer: Buffer;
   };
 }) {
+
+  console.log(env.smtp.user);
+
   return mailTransporter.sendMail({
     from: env.mailFrom,
     to: options.to,
